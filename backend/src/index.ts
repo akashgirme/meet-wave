@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import { Socket } from "socket.io";
 import http from "http";
 
@@ -6,11 +9,15 @@ import { Server } from 'socket.io';
 import { UserManager } from "./managers/UserManger";
 
 const app = express();
-const server = http.createServer(http);
+const server = http.createServer(app);
+
+const CLIENT_URL = process.env.CLIENT_URL;
+
+console.log(CLIENT_URL);
 
 const io = new Server(server, {
   cors: {
-    origin: "*"
+    origin: CLIENT_URL
   }
 });
 

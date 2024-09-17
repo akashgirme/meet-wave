@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Socket, io } from "socket.io-client";
 
-const URL = "http://localhost:3000";
+const URL = import.meta.env.VITE_API_URL;
 
 export const Room = ({
     name,
@@ -200,10 +200,12 @@ export const Room = ({
     }, [localVideoRef])
 
     return <div>
-        Hi {name}
-        <video autoPlay width={400} height={400} ref={localVideoRef} />
-        {lobby ? "Waiting to connect you to someone" : null}
-        <video autoPlay width={400} height={400} ref={remoteVideoRef} />
+        <h2 className="text-lg">Hello! {name}</h2>
+        <div className="flex justify-center">
+            <video autoPlay width={400} height={400} ref={localVideoRef} />
+            {lobby ? "Waiting to connect you to someone" : null}
+                <video autoPlay width={400} height={400} ref={remoteVideoRef} />
+        </div>
     </div>
 }
 
