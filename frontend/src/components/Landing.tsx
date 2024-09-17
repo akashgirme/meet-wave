@@ -37,16 +37,20 @@ export const Landing = () => {
 
     if (!joined) {
             
-    return <div >
-            <video autoPlay ref={videoRef}></video>
-            <Input placeholder="Enter your name" className="w-[200px]" type="text" onChange={(e) => {
+        return (
+        <div className="">
+        <div className="grid gap-3 justify-center items-center">
+            <div><video autoPlay ref={videoRef}></video></div>        
+            <div> <Input placeholder="Enter your name" className="w-[200px]" type="text" onChange={(e) => {
                 setName(e.target.value);
             }}>
-            </Input>
-            <Button onClick={() => {
+            </Input></div>
+           <div>  <Button onClick={() => {
                 setJoined(true);
-            }}>Join</Button>
+            }}>Join</Button></div> 
         </div>
+        </div>
+        )
     }
 
     return <Room name={name} localAudioTrack={localAudioTrack} localVideoTrack={localVideoTrack} />
