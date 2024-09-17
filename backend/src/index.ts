@@ -1,37 +1,39 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import { Socket } from "socket.io";
-import http from "http";
+import { Socket } from 'socket.io';
+import http from 'http';
 
 import express from 'express';
 import { Server } from 'socket.io';
-import { UserManager } from "./managers/UserManger";
+import { UserManager } from './managers/UserManger';
 
 const app = express();
 const server = http.createServer(app);
 
 const CLIENT_URL = process.env.CLIENT_URL;
 
-console.log(CLIENT_URL);
-
 const io = new Server(server, {
   cors: {
-    origin: CLIENT_URL
-  }
+    origin: CLIENT_URL,
+  },
 });
 
 const userManager = new UserManager();
 
 io.on('connection', (socket: Socket) => {
   console.log('a user connected');
-  userManager.addUser("randomName", socket);
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
+  userManager.addUser('randomName', socket);
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
     userManager.removeUser(socket.id);
-  })
+  });
 });
 
-server.listen(3000, () => {
-    console.log('listening on *:3000');
+const port = process.env.PORT || 3000;
+
+server.listen(port, () => {
+  console.log(
+    `🚀🚀 Application server is listening on http://localhost:${port}`,
+  );
 });
