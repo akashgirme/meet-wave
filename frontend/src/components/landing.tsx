@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Room } from './Room';
+import { Room } from './room';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';

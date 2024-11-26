@@ -1,4 +1,4 @@
-import { User } from './UserManger';
+import { User } from './user-manger';
 
 let GLOBAL_ROOM_ID = 1;
 
@@ -69,6 +69,25 @@ export class RoomManager {
     const receivingUser =
       room.user1.socket.id === senderSocketid ? room.user2 : room.user1;
     receivingUser.socket.emit('add-ice-candidate', { candidate, type });
+  }
+
+  removeUser(socketId: string) {
+    for (const [roomId, room] of this.rooms.entries()) {
+      if (
+        room.user1.socket.id === socketId ||
+        room.user2.socket.id === socketId
+      ) {
+        const remainingUser =
+          room.user1.socket.id === socketId ? room.user2 : room.user1;
+
+        // Notify the remaining user
+        remainingUser.socket.emit('user-left', { roomId });
+
+        // Clean up the room
+        this.rooms.delete(roomId);
+        break;
+      }
+    }
   }
 
   generate() {
